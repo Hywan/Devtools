@@ -71,7 +71,7 @@ class Expandflexentities extends Console\Dispatcher\Kit
     public function main()
     {
         $dryRun  = false;
-        $output  = null;
+        $output  = 'php://output';
         $verbose = false;
 
         while (false !== $c = $this->getOption($v)) {
@@ -100,10 +100,6 @@ class Expandflexentities extends Console\Dispatcher\Kit
 
                     break;
             }
-        }
-
-        if (null === $output) {
-            return $this->usage();
         }
 
         $hoaPath = 'hoa://Library/';
