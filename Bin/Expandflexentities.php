@@ -43,7 +43,7 @@ use Hoa\File;
 /**
  * Class \Hoa\Devtools\Bin\ExpandFlexEntities
  *
- * This command resolve the class_alias function in destination to IDE.
+ * This command resolves the `class_alias` function for IDE.
  *
  * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
@@ -56,11 +56,11 @@ class Expandflexentities extends Console\Dispatcher\Kit
      * @var array
      */
     protected $options = [
-        ['output', Console\GetOption::REQUIRED_ARGUMENT, 'o'],
-        ['dry-run', Console\GetOption::NO_ARGUMENT, 'd'],
-        ['verbose', Console\GetOption::NO_ARGUMENT, 'v'],
-        ['help', Console\GetOption::NO_ARGUMENT, 'h'],
-        ['help', Console\GetOption::NO_ARGUMENT, '?']
+        ['output',  Console\GetOption::REQUIRED_ARGUMENT, 'o'],
+        ['dry-run', Console\GetOption::NO_ARGUMENT,       'd'],
+        ['verbose', Console\GetOption::NO_ARGUMENT,       'v'],
+        ['help',    Console\GetOption::NO_ARGUMENT,       'h'],
+        ['help',    Console\GetOption::NO_ARGUMENT,       '?']
     ];
 
     /**
@@ -118,7 +118,7 @@ class Expandflexentities extends Console\Dispatcher\Kit
             $pathName = $file->getPathName();
             $raw      = file_get_contents($pathName);
 
-            if (!preg_match('#flexEntity\(\'(?P<classname>[^\']+)#', $raw, $class)) {
+            if (0 === preg_match('#flexEntity\(\'(?P<classname>[^\']+)#', $raw, $class)) {
                 preg_match('#\nclass_alias\(\'(?P<classname>[^\']+)#', $raw, $class);
             }
 
@@ -153,6 +153,7 @@ class Expandflexentities extends Console\Dispatcher\Kit
         }
 
         $out = '<?php ' . "\n";
+
         foreach ($aliases as $class) {
             $ns = substr($class['alias'], 0, strrpos($class['alias'], '\\'));
 
@@ -170,6 +171,8 @@ class Expandflexentities extends Console\Dispatcher\Kit
         }
 
         file_put_contents($output, $out);
+
+        return;
     }
 
     /**
@@ -180,12 +183,11 @@ class Expandflexentities extends Console\Dispatcher\Kit
     public function usage()
     {
         echo
-            'Usage   : devtools:Expandflexentities <options>', "\n",
+            'Usage   : devtools:expandflexentities <options>', "\n",
             'Options :', "\n",
              $this->makeUsageOptionsList([
-                 'Expandflexentities' => 'Path of flex entities file',
-                 'dry-run'            => 'No written operation',
-                 'verbose'            => 'Echo all information',
+                 'dry-run'            => 'No written operation.',
+                 'verbose'            => 'Echo all information.',
                  'help'               => 'This help.'
              ]), "\n";
 
@@ -194,4 +196,4 @@ class Expandflexentities extends Console\Dispatcher\Kit
 }
 
 __halt_compiler();
-Expand entities to ease auto-completion in IDE
+Expand entities to ease auto-completion in IDE.
